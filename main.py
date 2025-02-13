@@ -84,8 +84,8 @@ def main():
         
         other_cal = input("İşleme devam etmek ister misiniz? (y/Y/n/N): ")
         if other_cal in ["y", "Y"]:
-            reset = input("Sonuçları sıfırlamak ister misiniz? (y/Y/n/N): ")
-            if reset in ["y", "Y"]:  
+            reset = input(f"{result} Sonucunuzu kullanmaya devam etmek ister misiniz? (y/Y/n/N): ")
+            if reset in ["n", "N"]:  
                 result = None  
                 print("Sonuç sıfırlandı. Yeni bir işlem yapabilirsiniz.")
                 continue  
@@ -94,12 +94,11 @@ def main():
             continue  
         else:
             Flag1 = False  
+            print("The calculator is shutting down.")
 
 
         
 main()
-
-
 
 
 
