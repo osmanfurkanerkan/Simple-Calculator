@@ -1,7 +1,9 @@
 def sayıları_al():
-    number1 = int(input("İşlem yapmak istediğiniz ilk sayıyı giriniz: "))
-    number2 = int(input("İşlem yapmak istediğiniz ikinci sayıyı giriniz: "))
-    return number1, number2
+    try:
+        number1 = int(input("İşlem yapmak istediğiniz ilk sayıyı giriniz: "))
+    except:
+        print("Geçersiz giriş! Lütfen bir sayı girin.")
+    return number1
 
 def toplama(number1, number2):
     return number1 + number2
@@ -18,45 +20,92 @@ def bölme(number1, number2):
         number2 = int(input("Yeni ikinci sayıyı giriniz: "))
     return number1/number2
 
+def üs_Al(number1,number2):
+    return number1**number2
+
+def kök_hesapla(number1):
+    return number1**(1/2)
+
+def faktöriyel_hesap(number1):
+    faktöriyel=1
+    for i in range(1,(number1+1)):
+        faktöriyel*=i
+    return faktöriyel
+
 def main():
     print("WELCOME CALCULATOR")
-
-    number1, number2 = sayıları_al()
     işlem_sayısı = 0
     Flag1 = True
-
+    result = None  
     while Flag1:
         while True:
-            işlem = int(input("Hangi işlemi yapmak istersiniz? (1-toplama, 2-çıkarma, 3-çarpma, 4-bölme) : "))
-            if işlem in [1, 2, 3, 4]:
-                break
-            else:
-                print("Geçerli bir işlem numarası giriniz!")
+            try:
+                işlem = int(input("Hangi işlemi yapmak istersiniz? (1-toplama, 2-çıkarma, 3-çarpma, 4-bölme , 5-üs alma , 6-kök alma , 7-faktöriyel hesaplama) : "))
+                if işlem in [1, 2, 3, 4, 5, 6, 7]:
+                    break
+                else:
+                    print("Geçersiz sayı! Lütfen yalnızca 1, 2, 3, 4, 5, 6, 7'yi girin.")
+            except ValueError:
+                print("Geçersiz giriş! Lütfen bir sayı girin.")
 
-        if işlem == 1:
-            sonuç = toplama(number1, number2)
-        elif işlem == 2:
-            sonuç = çıkarma(number1, number2)
-        elif işlem == 3:
-            sonuç = çarpma(number1, number2)
+        
+        if result is None:  
+            number1 = sayıları_al()
         else:
-            sonuç = bölme(number1, number2)
+            number1 = result
 
-        # Bölme işlemi geçerli değilse (sıfıra bölme hatası) işlemi tekrarlama
-        if sonuç is not None:
-            işlem_sayısı += 1
-            print(f"{işlem_sayısı}. işlem sonucunda sonuç = {sonuç}")
+        if işlem in [6, 7]:  
+            number2 = None
+        elif işlem in [1, 2, 3, 4, 5]:  
+            number2 = int(input("İşlem yapmak istediğiniz ikinci sayıyı giriniz: "))
+        else:
+            number2 = None
 
-        # Kullanıcıya devam etmek isteyip istemediğini sor
+        
+        if işlem == 1:
+            result = toplama(number1, number2)
+        elif işlem == 2:
+            result = çıkarma(number1, number2)
+        elif işlem == 3:
+            result = çarpma(number1, number2)
+        elif işlem == 4:
+            result = bölme(number1, number2)
+        elif işlem == 5:
+            result = üs_Al(number1, number2)
+        elif işlem == 6:
+            result = kök_hesapla(number1)
+        elif işlem == 7:
+            result = faktöriyel_hesap(number1)
+
+        
+        işlem_sayısı += 1
+        print(f"{işlem_sayısı}. işlem sonucunda sonuç = {result}")
+
+        
         other_cal = input("İşleme devam etmek ister misiniz? (y/Y/n/N): ")
-        if other_cal in ["n", "N"]:
-            Flag1 = False
-            print("Hesap makinesindençıkış yapılıyor")
-        elif other_cal in ["y", "Y"]:
-            number1 = sonuç  # Önceki sonucu yeni işlem için birinci sayı yap
-            number2 = int(input("Yeni ikinci sayıyı giriniz: "))  # Yeni ikinci sayıyı al
+        if other_cal in ["y", "Y"]:
+            reset = input("Sonuçları sıfırlamak ister misiniz? (y/Y/n/N): ")
+            if reset in ["y", "Y"]:  
+                result = None  
+                print("Sonuç sıfırlandı. Yeni bir işlem yapabilirsiniz.")
+                continue  
+            else:
+                continue
+            continue  
+        else:
+            Flag1 = False  
 
+
+        
 main()
+
+
+
+
+
+
+
+
 
 
 
